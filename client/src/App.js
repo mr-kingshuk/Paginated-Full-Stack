@@ -1,17 +1,9 @@
-import Header from "./Components/Header/Header";
-import SearchBox from "./Components/SearchBox/SearchBox";
-import Table from "./Components/Table/Table";
-
-import UserState from "./Context/User/UserState";
+import Home from "./Pages/Home/Home";
 
 function App() {
   return (
     <div>
-      <Header />
-      <UserState>
-        <SearchBox />
-        <Table />
-      </UserState>
+      <Home />
     </div>
   );
 }

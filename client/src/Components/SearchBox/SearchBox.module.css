@@ -1,0 +1,41 @@
+.outer{
+    padding: 20px 0; 
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.fields{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.text_box{
+    border-radius: 5px;
+    padding: 5px 3px;
+    border: 2px solid black;
+}
+
+.btns {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit_btn,
+.reset_btn{
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 0.3em 2.5em;
+    border: 2px solid grey;
+    cursor: pointer;
+}
+
+.submit_btn{
+    background-color: #febe00;
+}

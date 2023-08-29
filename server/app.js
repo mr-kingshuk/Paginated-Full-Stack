@@ -1,8 +1,15 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-import { connectToDb, getDb } from './db.js';
+import router  from './routes/UserRoutes';
+
+//getting enviromental variables
+const PORT = process.env.PORT;
+const MONGO_URI = process.env.MONGO_URI;
 
 //app initialization and middlewares
 const app = express();
@@ -11,34 +18,21 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));
 
-let db;
-
-//listening to requests
-connectToDb( (err) => {
-    if(!err){
-        console.log("Connected to Database!!!");
-        app.listen(5000, () => {
-            console.log(`Server is running on http://localhost:${5000}`);
-        });
-        db = getDb();
-    }
-    else{
-        console.log(err);
-    }
-});
-
 //routes
 app.get('/', (req, res) => {
     res.send("Hello World!!");
 });
 
-app.get('/users', async (req, res) => {
-    let users = await db.collection('user').find().toArray();
-    if(users.length > 0)
-        res.status(200).send(users);
-    else{
+app.use("/api/users", router);
 
-        res.status(404).send({error: 'cannot find documents'})    
-    }    
-
-});
+//listening to requests
+mongoose.connect(MONGO_URI)
+    .then(() => {
+        //listen for requests
+        app.listen(PORT, () => {
+            console.log(`Connected to DB & Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+    });

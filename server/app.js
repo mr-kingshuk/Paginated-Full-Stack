@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import router  from './routes/UserRoutes';
+import userRouter  from './routes/UserRoutes.js';
 
 //getting enviromental variables
 const PORT = process.env.PORT;
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     res.send("Hello World!!");
 });
 
-app.use("/api/users", router);
+app.use("/api/users", userRouter);
 
 //listening to requests
 mongoose.connect(MONGO_URI)

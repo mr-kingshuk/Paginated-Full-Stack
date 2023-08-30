@@ -1,9 +1,19 @@
-import { Express } from "express";
+import express from 'express';
 
-const router = Express.Router();
+//controllers
+import createUser from "../controllers/UserController/createUser.js";
+import deleteUser from "../controllers/UserController/deleteUser.js";
+import getPaginatedUsers from "../controllers/UserController/getPaginatedUsers.js";
+import updateUser from "../controllers/UserController/updateUser.js";
 
-router.get('/', (req, res) => {
-    res.send("output all workouts");
-});
+const userRouter = express.Router();
 
-export default router;
+userRouter.get('/', getPaginatedUsers);
+
+userRouter.post('/', createUser);
+
+userRouter.patch('/:id', updateUser);
+
+userRouter.delete('/:id', deleteUser);
+
+export default userRouter;

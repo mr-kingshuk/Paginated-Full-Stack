@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import styles from './CreateUser.module.css';
 
 import UserContext from '../../Context/User/UserContext';
@@ -9,6 +9,7 @@ const CreateUser = (props) => {
     const [gender, setGender] = useState(props.user.gender);
 
     const {state, dispatch} = useContext(UserContext);
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -51,11 +52,28 @@ const CreateUser = (props) => {
         props.setModal(false);
     };
 
+    //click outside the modal to close it functionality
+    const modalRef = useRef();
+    useEffect(() => {
+        let handler = (event) => {
+            if(!modalRef.current.contains(event.target)){
+                props.setModal(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handler);
+
+        return () => document.removeEventListener("mousedown", handler);
+    })
+
     //action value can habe 2 values => Create -> to add new user, Edit -> to edit the user
     return (
         <div className={styles.background}>
-            <div className={styles.outer}>
+            <div className={styles.outer} ref={modalRef}>
                 <h2>{props.action} User</h2>
+                <div 
+                    className={styles.cross}
+                    onClick={() => props.setModal(false)}>X</div>
                 <form
                     className={styles.form}
                     onSubmit={submitHandler}>

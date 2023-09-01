@@ -4,7 +4,7 @@ import styles from './Header.module.css';
 const Header = () =>{
     return(
         <div className = {styles.head}>
-            MERN CRUD with Search and Pagination
+            MERN CRUD with  Pagination
         </div>
     )
 };

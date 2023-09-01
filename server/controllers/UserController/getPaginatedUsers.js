@@ -11,6 +11,7 @@ const getPaginatedUsers =  async (req, res) => {
     const totalUsers = await userModel.countDocuments({});
     const totalPages = Math.ceil(totalUsers/perPage);
     const skippedUsers = (page -1)*perPage;
+    const itemsOnPage = page === totalPages ? (totalUsers-skippedUsers) : perPage ;
 
     if(page > totalPages){
         return res.status(400).json(
@@ -18,7 +19,7 @@ const getPaginatedUsers =  async (req, res) => {
                 "error": "Invalid Page Number",
                 "metadata": {
                     "total_items": totalUsers,     
-                    "items_per_page": perPage,   
+                    "items_per_page": itemsOnPage,   
                     "current_page": page,      
                     "total_pages": totalPages,
                 }
@@ -30,7 +31,7 @@ const getPaginatedUsers =  async (req, res) => {
         "data": users,
         "metadata": {
             "total_items": totalUsers,     
-            "items_per_page": perPage,   
+            "items_per_page":  itemsOnPage,   
             "current_page": page,      
             "total_pages": totalPages,
         }

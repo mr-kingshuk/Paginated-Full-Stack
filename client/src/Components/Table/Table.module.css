@@ -1,6 +1,6 @@
 .outer{
     width: 80%;
-    margin: auto;
+    margin: 25px auto;
 
     display: flex;
     flex-direction: column;
@@ -24,4 +24,9 @@
 
 .header th{
     padding: 10px 0;
+}
+
+.no_users{
+    text-align: center;
+    padding: 25px 0;
 }

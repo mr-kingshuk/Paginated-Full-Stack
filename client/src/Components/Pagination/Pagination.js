@@ -34,14 +34,14 @@ const Pagination = (props) => {
 
     return(
         <div className= {styles.outer}>
-            {state.metadata.current_page > 1 ? <div 
-                className={styles.left_arrow}
-                onClick = { leftHandler }>Prev</div> : null}
+            <div 
+                className={`${styles.left_arrow} ${state.metadata.current_page > 1 ? null : styles.click_no}`}
+                onClick = {state.metadata.current_page > 1 ? leftHandler : null }>Prev</div>
             
             {arr.map((ele) => ele)}
-            {state.metadata.current_page < state.metadata.total_pages ? <div 
-                className={styles.right_arrow}
-                onClick={ rightHandler}>Next</div> : null}    
+            <div 
+                className={`${styles.right_arrow} ${state.metadata.current_page < state.metadata.total_pages ? null :styles.click_no}`}
+                onClick={state.metadata.current_page < state.metadata.total_pages ? rightHandler : null}>Next</div>    
         </div>
     );
 };

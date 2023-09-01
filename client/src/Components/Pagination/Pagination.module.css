@@ -6,6 +6,12 @@
     justify-content: center;
 }
 
+.outer .click_no{
+    cursor: not-allowed;
+    background-color: lightgrey;
+    color: black;
+}
+
 .outer div{
     border: 2px solid black;
     background-color: lightslategrey;

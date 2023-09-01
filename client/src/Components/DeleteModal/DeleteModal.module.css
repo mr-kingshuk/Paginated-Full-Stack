@@ -1,0 +1,57 @@
+.background{
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.outer{
+    width: 50%;
+    border: 2px solid black;
+    padding: 30px 70px;
+    background-color: white;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cross{
+    border: 2px solid black;
+    padding: 2px 5px;
+    background-color: lightgrey;
+    cursor: pointer; 
+
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.para{
+    font-weight: 200;
+}
+
+.btn{
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 0.3em 2.5em;
+    margin: 20px 0 25px;
+    border: 2px solid grey;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    align-self: center;
+}

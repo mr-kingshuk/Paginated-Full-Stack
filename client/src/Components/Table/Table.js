@@ -38,7 +38,7 @@ const Table = () => {
                         <th>Actions</th>
                     </tr>
                 </thead>
-                {state.data ? state.data.map((user) => <UserRow user={user} key={user._id} />) : <td colSpan={4} className={styles.no_users}>No Users Found</td>}
+                {state.data ? state.data.map((user) => <UserRow user={user} key={user._id} />) : <td colSpan={5} className={styles.no_users}>No Users Found!!</td>}
             </table>
             <Pagination 
             total={state.metadata.total_pages} 

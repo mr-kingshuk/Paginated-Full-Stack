@@ -7,21 +7,17 @@ const CreateUser = (props) => {
     const [name, setName] = useState(props.user.name);
     const [email, setEmail] = useState(props.user.email);
     const [gender, setGender] = useState(props.user.gender);
+    const [error, setError] = useState('');
+    const [emptyFields, setEmptyFields] = useState([]);
 
     const {state, dispatch} = useContext(UserContext);
 
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        let user = {};
+        const user = {name, email, gender};;
 
-        if (props.action === "Edit") {
-            if(props.user.name !== name)
-                user.name = name;
-            if(props.user.email !== email)
-                user.email = email;
-            if(props.user.gender !== gender)
-                user.gender = gender;   
+        if (props.action === "Edit") {    
             const response = await fetch(`http://localhost:5000/api/users/${props.user._id}`, {
                 method:  'PATCH',
                 headers : {
@@ -30,10 +26,16 @@ const CreateUser = (props) => {
                 body : JSON.stringify(user)
             });
             const json = await response.json();
-            dispatch({type : "editUser", payload : {user: user, id: json._id}});
+            if (!response.ok) {
+                setError(json.error);
+                setEmptyFields(json.emptyFields);
+            }
+            else{
+                dispatch({type : "editUser", payload : {user: user, id: json._id}});
+                props.setModal(false);
+            }
         }
         else if(props.action === "Create"){
-            user = {name, email, gender};
             const response = await fetch('http://localhost:5000/api/users', {
                 method:  'POST',
                 headers : {
@@ -43,13 +45,18 @@ const CreateUser = (props) => {
             });
             // eslint-disable-next-line
             const json = await response.json();
+            if (!response.ok) {
+                setError(json.error);
+                setEmptyFields(json.emptyFields);
+            }
+            else{
+                const res = await fetch(`http://localhost:5000/api/users?page=${state.metadata.current_page}&per_page=5`);
+                const js = await res.json();
+                dispatch({type : "setUsers", payload : js});
+                props.setModal(false);
+            }
 
-            const res = await fetch(`http://localhost:5000/api/users?page=${state.metadata.current_page}&per_page=5`);
-            const js = await res.json();
-            dispatch({type : "setUsers", payload : js});
         }
-
-        props.setModal(false);
     };
 
     //click outside the modal to close it functionality
@@ -85,7 +92,7 @@ const CreateUser = (props) => {
                             value={name}
                             id="name"
                             onChange={(event) => setName(event.target.value)}
-                            className={styles.text_box} />
+                            className={`${styles.text_box} ${emptyFields.includes('name') ? styles.error: null}`} />
                     </div>
                     <div className={styles.fields}>
                         <label htmlFor="email">E-Mail</label>
@@ -95,21 +102,21 @@ const CreateUser = (props) => {
                             value={email}
                             id="email"
                             onChange={(event) => setEmail(event.target.value)}
-                            className={styles.text_box} />
+                            className={`${styles.text_box} ${emptyFields.includes('email') ? styles.error: null}`} />
                     </div>
                     <div className={styles.fields}>
                         <select
                             value={gender}
                             id="gender"
                             onChange={(event) => setGender(event.target.value)}
-                            className={styles.select_box}
+                            className={`${styles.select_box} ${emptyFields.includes('gender') ? styles.error: null}`}
                         >
                             <option value="">Gender</option>
                             <option value="Male" >Male </option>
                             <option value="Female">Female</option>
                         </select>
                     </div>
-
+                    {error && <div className={styles.error}>{error}</div>}
                     <button
                         type="submit"
                         className={styles.submit_btn} >

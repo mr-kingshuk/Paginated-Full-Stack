@@ -12,7 +12,7 @@ const deleteUser = async (req, res) => {
     if(!user){
         return res.status(400).json({error: `No such user exist with id of ${id}`});
     }
-    return res.status(200).json(user);
+    return res.status(204).json(user);
 };
 
 export default deleteUser;

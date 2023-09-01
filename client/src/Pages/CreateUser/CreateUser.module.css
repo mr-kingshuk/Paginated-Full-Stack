@@ -54,6 +54,19 @@
     margin: 10px;
 }
 
+input.error, select.error{
+    border: 1px solid red;
+}
+
+div.error {
+    padding: 10px;
+    background: #ffefef;
+    border: 1px solid red;
+    color: red;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+
 .submit_btn{
     border-radius: 10px;
     font-size: 15px;

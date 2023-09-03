@@ -38,7 +38,6 @@ const DeleteModal = (props) => {
         else{
             dispatch({type : "deleteUser", payload : {_id : props.user._id}});
         }
-        console.log(state);
         props.setModal(false);
     };
 

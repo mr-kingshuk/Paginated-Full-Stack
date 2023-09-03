@@ -9,7 +9,6 @@ import UserContext from '../../Context/User/UserContext';
 
 const Table = () => {
     const [ modal, setModal ] = useState(false);
-    
     const {state, dispatch} = useContext(UserContext);
 
     useEffect(() => {
@@ -21,6 +20,7 @@ const Table = () => {
         fetchUserPaginated();
         // eslint-disable-next-line
     }, []);
+
 
     return (
         <div className={styles.outer}>
@@ -38,7 +38,7 @@ const Table = () => {
                         <th>Actions</th>
                     </tr>
                 </thead>
-                {state.data && state.data.length > 0 ? state.data.map((user) => <UserRow user={user} key={user._id} />) : <td colSpan={5} className={styles.no_users}>No Users Found!!</td>}
+                {state.data  ? state.data.map((user) => <UserRow user={user} key={user._id} />) : <td colSpan={5} className={styles.no_users}>No Users Found!!</td>}
             </table>
             <Pagination 
             total={state.metadata.total_pages} 

@@ -18,20 +18,27 @@ const DeleteModal = (props) => {
     });
 
     const deleteHandler = async () => {
-        console.log(props.user._id);
         const response = await fetch(`http://localhost:5000/api/users/${props.user._id}`, { method:  'DELETE' });
         // eslint-disable-next-line
         const json = await response.json();   
-
-        if(state.metadata.current_page === state.metadata.total_pages && state.metadata.items_per_page === 1 && state.metadata.current_page !== 1){
- 
+        // console.log(state);
+        if(state.metadata.current_page === state.metadata.total_pages && state.metadata.items_per_page === 1 ){
+            if(state.metadata.current_page !== 1){
                 const res = await fetch(`http://localhost:5000/api/users?page=${state.metadata.current_page - 1}&per_page=5`);
                 const js = await res.json();
                 dispatch({type : "setUsers", payload : js});
+            }
+            else{
+                console.log("here");
+                const res = await fetch(`http://localhost:5000/api/users?page=1&per_page=5`);
+                const js = await res.json();
+                dispatch({type : "setUsers", payload : js});
+            }
         }
         else{
             dispatch({type : "deleteUser", payload : {_id : props.user._id}});
         }
+        console.log(state);
         props.setModal(false);
     };
 

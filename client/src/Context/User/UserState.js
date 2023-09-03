@@ -20,9 +20,12 @@ const userReducer = (state, action) => {
                 data: updatedData,
             };
         case "deleteUser":  
-            const newData =  state.data.filter((user) => user._id !== action.payload._id) 
+            const newData =  state.data.filter((user) => user._id !== action.payload._id);
+            const newMetaData = {...state.metadata};
+            newMetaData.items_per_page--;
+            newMetaData.total_items--;
             return {
-                ...state,
+                metadata : newMetaData,
                 data : newData, 
             };
         default:

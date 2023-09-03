@@ -25,6 +25,8 @@ const getPaginatedUsers =  async (req, res) => {
                 }
             }) 
     }
+    if(totalUsers === 0)
+        return res.status(400).json({"error": "No user found"})
 
     const users = await userModel.find({}).sort({ createdAt: -1 }).skip(skippedUsers).limit(perPage);
     const output = {

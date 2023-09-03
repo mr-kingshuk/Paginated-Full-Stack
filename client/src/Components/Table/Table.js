@@ -9,14 +9,14 @@ import UserContext from '../../Context/User/UserContext';
 
 const Table = () => {
     const [ modal, setModal ] = useState(false);
-
+    
     const {state, dispatch} = useContext(UserContext);
 
     useEffect(() => {
         const fetchUserPaginated = async () => {
-            const response = await fetch('http://localhost:5000/api/users?page=1&per_page=5');
-            const json = await response.json();
-            dispatch({type : "setUsers", payload : json});
+                const response = await fetch('http://localhost:5000/api/users?page=1&per_page=5');
+                const json = await response.json();
+                dispatch({type : "setUsers", payload : json});
         };
         fetchUserPaginated();
         // eslint-disable-next-line
@@ -38,7 +38,7 @@ const Table = () => {
                         <th>Actions</th>
                     </tr>
                 </thead>
-                {state.data ? state.data.map((user) => <UserRow user={user} key={user._id} />) : <td colSpan={5} className={styles.no_users}>No Users Found!!</td>}
+                {state.data && state.data.length > 0 ? state.data.map((user) => <UserRow user={user} key={user._id} />) : <td colSpan={5} className={styles.no_users}>No Users Found!!</td>}
             </table>
             <Pagination 
             total={state.metadata.total_pages} 
